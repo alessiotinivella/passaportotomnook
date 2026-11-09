@@ -87,53 +87,35 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* VIGNETTA STILE ANIMAL CROSSING / CARTA DA LETTERA RUSTICA */
+        /* VIGNETTA STILE ANIMAL CROSSING CON IMMAGINE DI PARIGI */
         .ac-letter-card {
             background: #fffdf5; 
             border: 3px solid #d4b28c; 
-            border-radius: 18px; 
-            padding: 16px;
-            margin-top: 10px; 
+            border-radius: 16px; 
+            padding: 12px;
+            margin-top: 8px; 
             text-align: left; 
             box-shadow: 0 4px 12px rgba(120, 90, 50, 0.12);
-            position: relative;
-            background-image: radial-gradient(#f7eedb 1px, transparent 1px);
-            background-size: 16px 16px;
         }
 
-        .ac-header-vignette {
-            display: flex;
-            align-items: center;
-            background: #faedcd;
-            border: 2px dashed #ccd5ae;
-            border-radius: 12px;
-            padding: 8px 12px;
-            margin-bottom: 12px;
-            gap: 10px;
+        .paris-image-container {
+            width: 100%;
+            border-radius: 10px;
+            overflow: hidden;
+            border: 2px solid #d4b28c;
+            margin-bottom: 10px;
         }
 
-        .ac-icon-nook {
-            font-size: 26px;
-            background: #e9edc9;
-            width: 42px; height: 42px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%;
-            border: 2px solid #b7b7a4;
-            flex-shrink: 0;
+        .paris-image-container img {
+            width: 100%;
+            height: auto;
+            display: block;
         }
 
-        .ac-dialogue {
-            font-size: 12px;
-            color: #603813;
-            font-weight: bold;
-            line-height: 1.2;
-        }
+        .ac-row { margin-bottom: 6px; font-size: 12px; border-bottom: 1px dotted #e9edc9; padding-bottom: 3px; }
+        .ac-label { color: #8c7a6b; font-size: 9px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
+        .ac-val { font-weight: bold; color: #432818; font-size: 12px; }
 
-        .ac-row { margin-bottom: 8px; font-size: 13px; border-bottom: 1px dotted #e9edc9; padding-bottom: 4px; }
-        .ac-label { color: #8c7a6b; font-size: 10px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
-        .ac-val { font-weight: bold; color: #432818; font-size: 13px; }
-
-        /* Tasto rapido per testare la vignetta in un click */
         .debug-bypass {
             background: #f3f4f6; color: #4b5563; border: 1px dashed #d1d5db;
             font-size: 10px; padding: 4px 8px; border-radius: 6px; cursor: pointer; margin-top: 10px; display: inline-block;
@@ -159,8 +141,7 @@
             <p class="subtitle">Passaporto Nook Inc. Riconosciuto! Completa il check-in charter per sbloccare l'Isola Invernale Esclusiva.</p>
             <button type="button" class="btn" onclick="startQuiz()">Inizia Check-in 🎈</button>
             <br>
-            <!-- Pulsante rapido per testare subito la vignetta finale senza rifare tutto il quiz -->
-            <button type="button" class="debug-bypass" onclick="mostraParigiDiretto()">🛠️ [Test Rapido] Visualizza Vignetta Finale</button>
+            <button type="button" class="debug-bypass" onclick="mostraParigiDiretto()">🛠️ [Test Rapido] Visualizza Vignetta di Parigi</button>
         </div>
 
         <!-- STEP 1: OUTFIT -->
@@ -242,19 +223,15 @@
         </p>
     </div>
 
-    <!-- SCHERMATA REVEAL PARIGI (VIGNETTA STILE ANIMAL CROSSING) -->
+    <!-- SCHERMATA REVEAL PARIGI CON IMMAGINE CUSTOM -->
     <div class="step" id="stepParigi" style="text-align: center;">
-        <div class="badge" style="background-color: #dcfce7; color: #15803d; font-size: 12px;">✈️ VOLO CONFERMATO! 🎉</div>
-        <h1 style="color: #432818; font-size: 19px; margin-bottom: 2px;">Preparati Valentina, si va a Parigi!</h1>
+        <div class="badge" style="background-color: #dcfce7; color: #15803d; font-size: 11px;">✈️ VOLO CONFERMATO! 🎉</div>
+        <h1 style="color: #432818; font-size: 17px; margin-bottom: 2px;">Preparati Valentina, si va a Parigi!</h1>
         
         <div class="ac-letter-card">
-            <!-- Vignetta con Tom Nook / Bandierina -->
-            <div class="ac-header-vignette">
-                <div class="ac-icon-nook">🦝🚩</div>
-                <div class="ac-dialogue">
-                    <strong>Tom Nook dice:</strong><br>
-                    <span>«Richiesta di decollo approvata! La Nook Inc. vi augura buon viaggio! yes, yes!»</span>
-                </div>
+            <!-- Immagine di Parigi in stile Animal Crossing caricata -->
+            <div class="paris-image-container">
+                <img src="parigi.png" alt="Bienvenue à Paris - Animal Crossing Style">
             </div>
 
             <div class="ac-row">
@@ -263,7 +240,7 @@
             </div>
             <div class="ac-row">
                 <div class="ac-label">Destinazione</div>
-                <div class="ac-val">PARIGI 🇫🇷✨</div>
+                <div class="ac-val">Parigi 🇫🇷✨</div>
             </div>
             <div class="ac-row">
                 <div class="ac-label">Periodo Volo</div>
@@ -274,7 +251,7 @@
                 <div class="ac-val">Croissant, Tour Eiffel e luci di Natale! 🥐</div>
             </div>
         </div>
-        <p style="font-size: 13px; font-weight: bold; color: #0284c7; margin-top: 12px;">Prepara le valigie reali! 🧳✨</p>
+        <p style="font-size: 13px; font-weight: bold; color: #0284c7; margin-top: 10px;">Prepara le valigie reali! 🧳✨</p>
     </div>
 
     <!-- SCHERMATA SUGGERIMENTO DATE (ESITO NO) -->
@@ -301,7 +278,6 @@
         updateProgress(1);
     }
 
-    // Funzione di test rapido per visualizzare la vignetta subito senza compilare
     function mostraParigiDiretto() {
         document.getElementById('step0').classList.remove('active');
         document.getElementById('stepParigi').classList.add('active');
