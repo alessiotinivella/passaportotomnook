@@ -87,14 +87,57 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        .boarding-pass {
-            background: #ffffff; border: 2px dashed #0284c7; border-radius: 16px; padding: 16px;
-            margin-top: 15px; text-align: left; background-color: #f0f9ff;
+        /* VIGNETTA STILE ANIMAL CROSSING / CARTA DA LETTERA RUSTICA */
+        .ac-letter-card {
+            background: #fffdf5; 
+            border: 3px solid #d4b28c; 
+            border-radius: 18px; 
+            padding: 16px;
+            margin-top: 10px; 
+            text-align: left; 
+            box-shadow: 0 4px 12px rgba(120, 90, 50, 0.12);
+            position: relative;
+            background-image: radial-gradient(#f7eedb 1px, transparent 1px);
+            background-size: 16px 16px;
         }
-        .bp-header { display: flex; justify-content: space-between; border-bottom: 2px solid #bae6fd; padding-bottom: 8px; margin-bottom: 12px; font-weight: bold; color: #075985; }
-        .bp-row { margin-bottom: 8px; font-size: 13px; }
-        .bp-label { color: #64748b; font-size: 11px; text-transform: uppercase; }
-        .bp-val { font-weight: bold; color: #0c4a6e; font-size: 14px; }
+
+        .ac-header-vignette {
+            display: flex;
+            align-items: center;
+            background: #faedcd;
+            border: 2px dashed #ccd5ae;
+            border-radius: 12px;
+            padding: 8px 12px;
+            margin-bottom: 12px;
+            gap: 10px;
+        }
+
+        .ac-icon-nook {
+            font-size: 26px;
+            background: #e9edc9;
+            width: 42px; height: 42px;
+            display: flex; align-items: center; justify-content: center;
+            border-radius: 50%;
+            border: 2px solid #b7b7a4;
+            flex-shrink: 0;
+        }
+
+        .ac-dialogue {
+            font-size: 12px;
+            color: #603813;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .ac-row { margin-bottom: 8px; font-size: 13px; border-bottom: 1px dotted #e9edc9; padding-bottom: 4px; }
+        .ac-label { color: #8c7a6b; font-size: 10px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
+        .ac-val { font-weight: bold; color: #432818; font-size: 13px; }
+
+        /* Tasto rapido per testare la vignetta in un click */
+        .debug-bypass {
+            background: #f3f4f6; color: #4b5563; border: 1px dashed #d1d5db;
+            font-size: 10px; padding: 4px 8px; border-radius: 6px; cursor: pointer; margin-top: 10px; display: inline-block;
+        }
     </style>
 </head>
 <body>
@@ -115,6 +158,9 @@
             <h1>Volo Isola Segreta 🛫</h1>
             <p class="subtitle">Passaporto Nook Inc. Riconosciuto! Completa il check-in charter per sbloccare l'Isola Invernale Esclusiva.</p>
             <button type="button" class="btn" onclick="startQuiz()">Inizia Check-in 🎈</button>
+            <br>
+            <!-- Pulsante rapido per testare subito la vignetta finale senza rifare tutto il quiz -->
+            <button type="button" class="debug-bypass" onclick="mostraParigiDiretto()">🛠️ [Test Rapido] Visualizza Vignetta Finale</button>
         </div>
 
         <!-- STEP 1: OUTFIT -->
@@ -144,7 +190,7 @@
             <span class="question-title">3. La Torre di Controllo DAL propone questo slot di volo standard:</span>
             
             <div style="background: #f0f9ff; border: 2px dashed #0284c7; border-radius: 12px; padding: 12px; margin-bottom: 14px; text-align: center;">
-                <span style="font-size: 15px; font-weight: bold; color: #075985;">✈️ Da Venerdì 11 a Lunedì 14 Dicembre</span>
+                <span style="font-size: 14px; font-weight: bold; color: #075985;">✈️ Giovedì 10 (sera) – Lunedì 14 (pomeriggio)</span>
             </div>
 
             <div class="options">
@@ -183,56 +229,59 @@
         </div>
     </form>
 
-    <!-- SCHERMATA DI ATTESA CON DEBUG VISIVO -->
+    <!-- SCHERMATA DI ATTESA -->
     <div class="step" id="stepAttesa" style="text-align: center;">
         <div class="badge">TORRE DI CONTROLLO DAL 📡</div>
         <h1>Elaborazione Rotta in Corso...</h1>
         <div class="spinner"></div>
         <p class="subtitle" style="font-size: 13px; color: #0369a1;">
-            Verifica disponibilità slot con la Torre...<br><br>
-            <!-- Testo di debug per vedere cosa legge in tempo reale -->
+            Verifica disponibilità slot con la Torre...<br>
             <span id="debugStatus" style="font-size: 11px; color: #64748b; background: #f0f9ff; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-top: 6px;">
                 Stato connessione: In ascolto...
             </span>
         </p>
     </div>
 
-    <!-- SCHERMATA REVEAL PARIGI (ESITO SI) -->
+    <!-- SCHERMATA REVEAL PARIGI (VIGNETTA STILE ANIMAL CROSSING) -->
     <div class="step" id="stepParigi" style="text-align: center;">
-        <div class="badge" style="background-color: #dcfce7; color: #15803d;">VOLO CONFERMATO! 🎉</div>
-        <h1 style="color: #0369a1;">SURPRISE REVEAL! 🥐🇫🇷</h1>
-        <p class="subtitle">Non è un'isola di Animal Crossing... <strong>SI VA A PARIGI NELLA VITA VERA!</strong></p>
+        <div class="badge" style="background-color: #dcfce7; color: #15803d; font-size: 12px;">✈️ VOLO CONFERMATO! 🎉</div>
+        <h1 style="color: #432818; font-size: 19px; margin-bottom: 2px;">Preparati Valentina, si va a Parigi!</h1>
         
-        <div class="boarding-pass">
-            <div class="bp-header">
-                <span>DODO AIRLINES</span>
-                <span>BOARDING PASS</span>
+        <div class="ac-letter-card">
+            <!-- Vignetta con Tom Nook / Bandierina -->
+            <div class="ac-header-vignette">
+                <div class="ac-icon-nook">🦝🚩</div>
+                <div class="ac-dialogue">
+                    <strong>Tom Nook dice:</strong><br>
+                    <span>«Richiesta di decollo approvata! La Nook Inc. vi augura buon viaggio! yes, yes!»</span>
+                </div>
             </div>
-            <div class="bp-row">
-                <div class="bp-label">Passeggero</div>
-                <div class="bp-val">Valentina (Patata) 💖</div>
+
+            <div class="ac-row">
+                <div class="ac-label">Passeggero</div>
+                <div class="ac-val">Valentina Patata 💖</div>
             </div>
-            <div class="bp-row">
-                <div class="bp-label">Destinazione</div>
-                <div class="bp-val">PARIGI (CDG) 🇫🇷</div>
+            <div class="ac-row">
+                <div class="ac-label">Destinazione</div>
+                <div class="ac-val">PARIGI 🇫🇷✨</div>
             </div>
-            <div class="bp-row">
-                <div class="bp-label">Periodo Volo</div>
-                <div class="bp-val">11 – 14 Dicembre</div>
+            <div class="ac-row">
+                <div class="ac-label">Periodo Volo</div>
+                <div class="ac-val">Giovedì 10 (sera) – Lunedì 14 (pomeriggio)</div>
             </div>
-            <div class="bp-row">
-                <div class="bp-label">Note speciali</div>
-                <div class="bp-val">Croissant, Tour Eiffel e luci di Natale! ✨</div>
+            <div class="ac-row" style="border-bottom: none; margin-bottom: 0;">
+                <div class="ac-label">Note speciali</div>
+                <div class="ac-val">Croissant, Tour Eiffel e luci di Natale! 🥐</div>
             </div>
         </div>
-        <p style="font-size: 14px; font-weight: bold; color: #0284c7; margin-top: 15px;">Prepara le valigie reali! 🧳✈️</p>
+        <p style="font-size: 13px; font-weight: bold; color: #0284c7; margin-top: 12px;">Prepara le valigie reali! 🧳✨</p>
     </div>
 
     <!-- SCHERMATA SUGGERIMENTO DATE (ESITO NO) -->
     <div class="step" id="stepDate" style="text-align: center;">
         <div class="badge" style="background-color: #fee2e2; color: #b91c1c;">AVVISO TORRE DI CONTROLLO ⚠️</div>
         <h1>Slot Non Disponibile</h1>
-        <p class="subtitle">Lo slot 11-14 Dicembre non è compatibile. Scrivi qui sotto le tue preferenze o i giorni in cui saresti libera:</p>
+        <p class="subtitle">Lo slot proposto non è compatibile. Scrivi qui sotto le tue preferenze o i giorni in cui saresti libera:</p>
         
         <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px; text-align: left; font-size: 13px;">
             <textarea id="suggerimentoDate" class="text-input-box" placeholder="Es. Preferirei dal 18 al 21 dicembre oppure nel weekend..."></textarea>
@@ -250,6 +299,12 @@
         document.getElementById('step1').classList.add('active');
         document.getElementById('progressContainer').style.display = 'block';
         updateProgress(1);
+    }
+
+    // Funzione di test rapido per visualizzare la vignetta subito senza compilare
+    function mostraParigiDiretto() {
+        document.getElementById('step0').classList.remove('active');
+        document.getElementById('stepParigi').classList.add('active');
     }
 
     function nextStep(stepNum) {
@@ -280,19 +335,16 @@
 
         if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
 
-        // Passa alla schermata di attesa
         document.getElementById('step5').classList.remove('active');
         document.getElementById('progressContainer').style.display = 'none';
         document.getElementById('stepAttesa').classList.add('active');
 
-        // Invia email in background
         try {
             const form = document.getElementById('quizForm');
             const formData = new FormData(form);
             navigator.sendBeacon(form.action, formData);
         } catch (e) {}
 
-        // Avvia il controllo ciclico sul file stato.json ogni 2.5 secondi
         pollInterval = setInterval(checkStatoRemote, 2500);
     }
 
@@ -302,7 +354,7 @@
 
         fetch('stato.json?' + cacheBuster, { cache: 'no-store' })
             .then(res => {
-                if (!res.ok) throw new Error("File non trovato (404)");
+                if (!res.ok) throw new Error("File non trovato");
                 return res.json();
             })
             .then(data => {
@@ -320,7 +372,7 @@
                 }
             })
             .catch(err => {
-                if (debugEl) debugEl.innerText = "Connessione in corso (ricerca stato)...";
+                if (debugEl) debugEl.innerText = "In ascolto su stato.json...";
             });
     }
 
