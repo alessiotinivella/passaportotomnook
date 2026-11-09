@@ -87,7 +87,6 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* Card Carta d'Imbarco Parigi */
         .boarding-pass {
             background: #ffffff; border: 2px dashed #0284c7; border-radius: 16px; padding: 16px;
             margin-top: 15px; text-align: left; background-color: #f0f9ff;
@@ -184,7 +183,7 @@
         </div>
     </form>
 
-    <!-- FINTA SCHERMATA DI ATTESA (DURATA 4-5 SECONDI) -->
+    <!-- SCHERMATA DI ATTESA (DURATA 4.5 SECONDI) -->
     <div class="step" id="stepAttesa" style="text-align: center;">
         <div class="badge">TORRE DI CONTROLLO DAL 📡</div>
         <h1>Elaborazione Rotta in Corso...</h1>
@@ -204,113 +203,4 @@
         <div class="boarding-pass">
             <div class="bp-header">
                 <span>DODO AIRLINES</span>
-                <span>BOARDING PASS</span>
-            </div>
-            <div class="bp-row">
-                <div class="bp-label">Passeggero</div>
-                <div class="bp-val">Valentina (Patata) 💖</div>
-            </div>
-            <div class="bp-row">
-                <div class="bp-label">Destinazione</div>
-                <div class="bp-val">PARIGI (CDG) 🇫🇷</div>
-            </div>
-            <div class="bp-row">
-                <div class="bp-label">Periodo Volo</div>
-                <div class="bp-val">11 – 14 Dicembre</div>
-            </div>
-            <div class="bp-row">
-                <div class="bp-label">Note speciali</div>
-                <div class="bp-val">Croissant, Tour Eiffel e luci di Natale! ✨</div>
-            </div>
-        </div>
-        <p style="font-size: 14px; font-weight: bold; color: #0284c7; margin-top: 15px;">Prepara le valigie reali! 🧳✈️</p>
-    </div>
-
-    <!-- SCHERMATA SUGGERIMENTO DATE (ESITO NO) -->
-    <div class="step" id="stepDate" style="text-align: center;">
-        <div class="badge" style="background-color: #fee2e2; color: #b91c1c;">AVVISO TORRE DI CONTROLLO ⚠️</div>
-        <h1>Slot Non Disponibile</h1>
-        <p class="subtitle">Lo slot 11-14 Dicembre non è compatibile. Scrivi qui sotto le tue preferenze o i giorni in cui saresti libera:</p>
-        
-        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px; text-align: left; font-size: 13px;">
-            <textarea id="suggerimentoDate" class="text-input-box" placeholder="Es. Preferirei dal 18 al 21 dicembre oppure nel weekend..."></textarea>
-            <button type="button" class="btn" onclick="inviaPreferenzaDate()" style="margin-top: 4px;">Invia Suggerimento alla Torre 📩</button>
-        </div>
-    </div>
-</div>
-
-<script>
-    const totalSteps = 5;
-
-    function startQuiz() {
-        document.getElementById('step0').classList.remove('active');
-        document.getElementById('step1').classList.add('active');
-        document.getElementById('progressContainer').style.display = 'block';
-        updateProgress(1);
-    }
-
-    function nextStep(stepNum) {
-        const currentStepEl = document.getElementById('step' + stepNum);
-        const inputs = currentStepEl.querySelectorAll('input[type="radio"]');
-        let checked = false;
-        inputs.forEach(input => { if (input.checked) checked = true; });
-
-        if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
-
-        currentStepEl.classList.remove('active');
-        const nextStepEl = document.getElementById('step' + (stepNum + 1));
-        if (nextStepEl) {
-            nextStepEl.classList.add('active');
-            updateProgress(stepNum + 1);
-        }
-    }
-
-    function updateProgress(step) {
-        document.getElementById('progressBar').style.width = (step / totalSteps) * 100 + '%';
-    }
-
-    function submitQuiz() {
-        const currentStepEl = document.getElementById('step5');
-        const inputs = currentStepEl.querySelectorAll('input[type="radio"]');
-        let checked = false;
-        inputs.forEach(input => { if (input.checked) checked = true; });
-
-        if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
-
-        // Manda l'email in sottofondo
-        const form = document.getElementById('quizForm');
-        const formData = new FormData(form);
-
-        if (navigator.onLine) {
-            fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } }).catch(err => console.log(err));
-        }
-
-        // Mostra la finta schermata di attesa
-        document.getElementById('step5').classList.remove('active');
-        document.getElementById('progressContainer').style.display = 'none';
-        document.getElementById('stepAttesa').classList.add('active');
-
-        // Legge la risposta data alla domanda 3 (Date)
-        const sceltaDate = document.querySelector('input[name="Slot_Date_Preferito"]:checked').value;
-
-        // Dopo 4.5 secondi sblocca l'esito perfetto automaticamente
-        setTimeout(() => {
-            document.getElementById('stepAttesa').classList.remove('active');
-
-            if (sceltaDate === "SI") {
-                document.getElementById('stepParigi').classList.add('active');
-            } else {
-                document.getElementById('stepDate').classList.add('active');
-            }
-        }, 4500);
-    }
-
-    function inviaPreferenzaDate() {
-        const testo = document.getElementById('suggerimentoDate').value;
-        if (!testo) { alert("Scrivi un breve suggerimento prima di inviare!"); return; }
-        alert("Suggerimento inviato con successo alla Torre di Controllo! Ti ricontatteremo a breve.");
-    }
-</script>
-
-</body>
-</html>
+                <span>BOARDING
