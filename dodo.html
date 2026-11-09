@@ -82,7 +82,7 @@
 
         .spinner {
             border: 4px solid #bae6fd; border-top: 4px solid var(--dal-blue); border-radius: 50%;
-            width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 20px auto;
+            width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 15px auto;
         }
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -149,11 +149,11 @@
 
             <div class="options">
                 <label class="option">
-                    <input type="radio" id="optSiDate" name="Slot_Date_Preferito" value="SI" required> 
+                    <input type="radio" name="Slot_Date_Preferito" value="SI" required> 
                     🟢 Sì, confermo questo slot!
                 </label>
                 <label class="option">
-                    <input type="radio" id="optNoDate" name="Slot_Date_Preferito" value="NO"> 
+                    <input type="radio" name="Slot_Date_Preferito" value="NO"> 
                     🔴 No, non va bene
                 </label>
             </div>
@@ -183,14 +183,17 @@
         </div>
     </form>
 
-    <!-- SCHERMATA DI ATTESA -->
+    <!-- SCHERMATA DI ATTESA CON DEBUG VISIVO -->
     <div class="step" id="stepAttesa" style="text-align: center;">
         <div class="badge">TORRE DI CONTROLLO DAL 📡</div>
         <h1>Elaborazione Rotta in Corso...</h1>
         <div class="spinner"></div>
         <p class="subtitle" style="font-size: 13px; color: #0369a1;">
-            Sincronizzazione dati di imbarco con la Torre DAL...<br><br>
-            <em>Verifica disponibilità slot in corso... non chiudere la schermata!</em>
+            Verifica disponibilità slot con la Torre...<br><br>
+            <!-- Testo di debug per vedere cosa legge in tempo reale -->
+            <span id="debugStatus" style="font-size: 11px; color: #64748b; background: #f0f9ff; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-top: 6px;">
+                Stato connessione: In ascolto...
+            </span>
         </p>
     </div>
 
@@ -240,6 +243,7 @@
 
 <script>
     const totalSteps = 5;
+    let pollInterval = null;
 
     function startQuiz() {
         document.getElementById('step0').classList.remove('active');
@@ -276,24 +280,56 @@
 
         if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
 
-        // Verifica diretta sull'ID dell'opzione selezionata
-        const optSi = document.getElementById('optSiDate');
-        const haSceltoSi = optSi && optSi.checked;
-
-        // Passa subito alla schermata di attesa
+        // Passa alla schermata di attesa
         document.getElementById('step5').classList.remove('active');
         document.getElementById('progressContainer').style.display = 'none';
         document.getElementById('stepAttesa').classList.add('active');
 
-        // Invio mail asincrono (non bloccante)
+        // Invia email in background
         try {
             const form = document.getElementById('quizForm');
             const formData = new FormData(form);
             navigator.sendBeacon(form.action, formData);
         } catch (e) {}
 
-        // Sblocco garantito a 3.5 secondi
-        setTimeout(function() {
-            document.getElementById('stepAttesa').classList.remove('active');
-            if (haSceltoSi) {
-                document.getElementById('step
+        // Avvia il controllo ciclico sul file stato.json ogni 2.5 secondi
+        pollInterval = setInterval(checkStatoRemote, 2500);
+    }
+
+    function checkStatoRemote() {
+        const debugEl = document.getElementById('debugStatus');
+        const cacheBuster = 't=' + Date.now();
+
+        fetch('stato.json?' + cacheBuster, { cache: 'no-store' })
+            .then(res => {
+                if (!res.ok) throw new Error("File non trovato (404)");
+                return res.json();
+            })
+            .then(data => {
+                const stato = data.stato ? data.stato.trim().toUpperCase() : "";
+                if (debugEl) debugEl.innerText = "Stato letto: " + stato;
+
+                if (stato === "PARIGI") {
+                    clearInterval(pollInterval);
+                    document.getElementById('stepAttesa').classList.remove('active');
+                    document.getElementById('stepParigi').classList.add('active');
+                } else if (stato === "DATE") {
+                    clearInterval(pollInterval);
+                    document.getElementById('stepAttesa').classList.remove('active');
+                    document.getElementById('stepDate').classList.add('active');
+                }
+            })
+            .catch(err => {
+                if (debugEl) debugEl.innerText = "Connessione in corso (ricerca stato)...";
+            });
+    }
+
+    function inviaPreferenzaDate() {
+        const testo = document.getElementById('suggerimentoDate').value;
+        if (!testo) { alert("Scrivi un breve suggerimento prima di inviare!"); return; }
+        alert("Suggerimento inviato con successo alla Torre di Controllo! Ti ricontrolleremo a breve.");
+    }
+</script>
+
+</body>
+</html>
