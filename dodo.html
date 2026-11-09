@@ -295,21 +295,32 @@
         pollInterval = setInterval(checkStatoRemote, 3000);
     }
 
-    function checkStatoRemote() {
-        fetch('stato.json?t=' + new Date().getTime())
-            .then(res => res.json())
+function checkStatoRemote() {
+        // Genera un numero casuale univoco per distruggere la cache del browser e di GitHub
+        const cacheBuster = Date.now() + '_' + Math.random().toString(36).substring(2);
+        
+        fetch('stato.json?v=' + cacheBuster, { cache: "no-store" })
+            .then(res => {
+                if (!res.ok) throw new Error("HTTP error " + res.status);
+                return res.json();
+            })
             .then(data => {
-                if (data.stato === "PARIGI") {
+                // Rimuove eventuali spazi bianchi o maiuscole/minuscole errate
+                const statoPulito = data.stato ? data.stato.trim().toUpperCase() : "";
+
+                if (statoPulito === "PARIGI") {
                     clearInterval(pollInterval);
                     document.getElementById('stepAttesa').classList.remove('active');
                     document.getElementById('stepParigi').classList.add('active');
-                } else if (data.stato === "DATE") {
+                } else if (statoPulito === "DATE") {
                     clearInterval(pollInterval);
                     document.getElementById('stepAttesa').classList.remove('active');
                     document.getElementById('stepDate').classList.add('active');
                 }
             })
-            .catch(err => console.log("In attesa di aggiornamento stato..."));
+            .catch(err => {
+                console.log("In attesa del cambio stato remoto...", err);
+            });
     }
 
     function inviaPreferenzaDate() {
