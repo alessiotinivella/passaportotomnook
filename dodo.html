@@ -149,11 +149,11 @@
 
             <div class="options">
                 <label class="option">
-                    <input type="radio" name="Slot_Date_Preferito" value="SI" required> 
+                    <input type="radio" id="optSiDate" name="Slot_Date_Preferito" value="SI" required> 
                     🟢 Sì, confermo questo slot!
                 </label>
                 <label class="option">
-                    <input type="radio" name="Slot_Date_Preferito" value="NO"> 
+                    <input type="radio" id="optNoDate" name="Slot_Date_Preferito" value="NO"> 
                     🔴 No, non va bene
                 </label>
             </div>
@@ -183,7 +183,7 @@
         </div>
     </form>
 
-    <!-- SCHERMATA DI ATTESA (DURATA 4.5 SECONDI) -->
+    <!-- SCHERMATA DI ATTESA -->
     <div class="step" id="stepAttesa" style="text-align: center;">
         <div class="badge">TORRE DI CONTROLLO DAL 📡</div>
         <h1>Elaborazione Rotta in Corso...</h1>
@@ -203,4 +203,97 @@
         <div class="boarding-pass">
             <div class="bp-header">
                 <span>DODO AIRLINES</span>
-                <span>BOARDING
+                <span>BOARDING PASS</span>
+            </div>
+            <div class="bp-row">
+                <div class="bp-label">Passeggero</div>
+                <div class="bp-val">Valentina (Patata) 💖</div>
+            </div>
+            <div class="bp-row">
+                <div class="bp-label">Destinazione</div>
+                <div class="bp-val">PARIGI (CDG) 🇫🇷</div>
+            </div>
+            <div class="bp-row">
+                <div class="bp-label">Periodo Volo</div>
+                <div class="bp-val">11 – 14 Dicembre</div>
+            </div>
+            <div class="bp-row">
+                <div class="bp-label">Note speciali</div>
+                <div class="bp-val">Croissant, Tour Eiffel e luci di Natale! ✨</div>
+            </div>
+        </div>
+        <p style="font-size: 14px; font-weight: bold; color: #0284c7; margin-top: 15px;">Prepara le valigie reali! 🧳✈️</p>
+    </div>
+
+    <!-- SCHERMATA SUGGERIMENTO DATE (ESITO NO) -->
+    <div class="step" id="stepDate" style="text-align: center;">
+        <div class="badge" style="background-color: #fee2e2; color: #b91c1c;">AVVISO TORRE DI CONTROLLO ⚠️</div>
+        <h1>Slot Non Disponibile</h1>
+        <p class="subtitle">Lo slot 11-14 Dicembre non è compatibile. Scrivi qui sotto le tue preferenze o i giorni in cui saresti libera:</p>
+        
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px; text-align: left; font-size: 13px;">
+            <textarea id="suggerimentoDate" class="text-input-box" placeholder="Es. Preferirei dal 18 al 21 dicembre oppure nel weekend..."></textarea>
+            <button type="button" class="btn" onclick="inviaPreferenzaDate()" style="margin-top: 4px;">Invia Suggerimento alla Torre 📩</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const totalSteps = 5;
+
+    function startQuiz() {
+        document.getElementById('step0').classList.remove('active');
+        document.getElementById('step1').classList.add('active');
+        document.getElementById('progressContainer').style.display = 'block';
+        updateProgress(1);
+    }
+
+    function nextStep(stepNum) {
+        const currentStepEl = document.getElementById('step' + stepNum);
+        const inputs = currentStepEl.querySelectorAll('input[type="radio"]');
+        let checked = false;
+        inputs.forEach(input => { if (input.checked) checked = true; });
+
+        if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
+
+        currentStepEl.classList.remove('active');
+        const nextStepEl = document.getElementById('step' + (stepNum + 1));
+        if (nextStepEl) {
+            nextStepEl.classList.add('active');
+            updateProgress(stepNum + 1);
+        }
+    }
+
+    function updateProgress(step) {
+        document.getElementById('progressBar').style.width = (step / totalSteps) * 100 + '%';
+    }
+
+    function submitQuiz() {
+        const currentStepEl = document.getElementById('step5');
+        const inputs = currentStepEl.querySelectorAll('input[type="radio"]');
+        let checked = false;
+        inputs.forEach(input => { if (input.checked) checked = true; });
+
+        if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
+
+        // Verifica diretta sull'ID dell'opzione selezionata
+        const optSi = document.getElementById('optSiDate');
+        const haSceltoSi = optSi && optSi.checked;
+
+        // Passa subito alla schermata di attesa
+        document.getElementById('step5').classList.remove('active');
+        document.getElementById('progressContainer').style.display = 'none';
+        document.getElementById('stepAttesa').classList.add('active');
+
+        // Invio mail asincrono (non bloccante)
+        try {
+            const form = document.getElementById('quizForm');
+            const formData = new FormData(form);
+            navigator.sendBeacon(form.action, formData);
+        } catch (e) {}
+
+        // Sblocco garantito a 3.5 secondi
+        setTimeout(function() {
+            document.getElementById('stepAttesa').classList.remove('active');
+            if (haSceltoSi) {
+                document.getElementById('step
