@@ -404,6 +404,15 @@
     const statoUrl = 'stato.json';
     let pollInterval = null;
     let controlloInCorso = false;
+    let bloccaUscita = false;
+    let richiestaStatoInCorso = false;
+
+    window.addEventListener('beforeunload', (event) => {
+        if (!bloccaUscita) return;
+
+        event.preventDefault();
+        event.returnValue = '';
+    });
 
     function startQuiz() {
         document.getElementById('step0').classList.remove('active');
@@ -468,9 +477,12 @@
             finalStep.classList.remove('active');
             document.getElementById('progressContainer').style.display = 'none';
             document.getElementById('stepAttesa').classList.add('active');
+            bloccaUscita = true;
 
-            await checkStatoRemote();
-            pollInterval = setInterval(checkStatoRemote, 2500);
+            const statoGiaDisponibile = await checkStatoRemote();
+            if (!statoGiaDisponibile) {
+                pollInterval = setInterval(checkStatoRemote, 2500);
+            }
         } catch (error) {
             controlloInCorso = false;
             submitButton.disabled = false;
@@ -479,28 +491,37 @@
     }
 
     async function checkStatoRemote() {
+        if (richiestaStatoInCorso) return false;
+        richiestaStatoInCorso = true;
+
         try {
             const response = await fetch(statoUrl + '?t=' + Date.now(), {
                 cache: 'no-store'
             });
 
-            if (!response.ok) return;
+            if (!response.ok) return false;
 
             const data = await response.json();
             const stato = typeof data.stato === 'string'
                 ? data.stato.trim().toUpperCase()
                 : '';
 
-            if (stato !== 'PARIGI' && stato !== 'DATE') return;
+            if (stato !== 'PARIGI' && stato !== 'DATE') return false;
 
             clearInterval(pollInterval);
             pollInterval = null;
+            bloccaUscita = false;
 
             document.getElementById('stepAttesa').classList.remove('active');
             document.getElementById(stato === 'PARIGI' ? 'stepParigi' : 'stepDate')
                 .classList.add('active');
+
+            return true;
         } catch {
             // Se il file non è ancora raggiungibile, riprova al controllo successivo.
+            return false;
+        } finally {
+            richiestaStatoInCorso = false;
         }
     }
 
