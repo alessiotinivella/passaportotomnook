@@ -14,14 +14,20 @@
             --text-main: #0c4a6e;
         }
 
-        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
         body {
             background-color: var(--bg-page);
             background-image: radial-gradient(circle at top right, #bae6fd, var(--bg-page));
             color: var(--text-main);
-            margin: 0; padding: 12px;
-            display: flex; justify-content: center; align-items: center;
+            margin: 0;
+            padding: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             min-height: 100vh;
         }
 
@@ -29,72 +35,165 @@
             background-color: var(--card-inner);
             padding: 24px 18px;
             border-radius: 20px;
-            max-width: 420px; width: 100%;
+            max-width: 420px;
+            width: 100%;
             box-shadow: 0 10px 25px rgba(2, 132, 199, 0.15);
             border: 3px solid var(--border-color);
             text-align: center;
-            position: relative;
         }
 
         .progress-bar-container {
-            width: 100%; background-color: #bae6fd; height: 6px;
-            border-radius: 10px; margin-bottom: 16px; overflow: hidden; display: none;
+            width: 100%;
+            background-color: #bae6fd;
+            height: 6px;
+            border-radius: 10px;
+            margin-bottom: 16px;
+            overflow: hidden;
+            display: none;
         }
 
-        .progress-bar { height: 100%; width: 20%; background: linear-gradient(90deg, #0284c7, #0369a1); transition: width 0.3s ease; }
+        .progress-bar {
+            height: 100%;
+            width: 20%;
+            background: linear-gradient(90deg, #0284c7, #0369a1);
+            transition: width 0.3s ease;
+        }
 
-        h1 { color: var(--dal-dark-blue); font-size: 20px; margin-top: 0; margin-bottom: 8px; }
-        p.subtitle { color: #0369a1; font-size: 13px; margin-bottom: 16px; line-height: 1.4; }
+        h1 {
+            color: var(--dal-dark-blue);
+            font-size: 20px;
+            margin-top: 0;
+            margin-bottom: 8px;
+        }
 
-        .step { display: none; text-align: left; animation: fadeIn 0.35s ease; }
-        .step.active { display: block; }
+        p.subtitle {
+            color: #0369a1;
+            font-size: 13px;
+            margin-bottom: 16px;
+            line-height: 1.4;
+        }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+        .step {
+            display: none;
+            text-align: left;
+            animation: fadeIn 0.35s ease;
+        }
 
-        .question-title { font-size: 14px; font-weight: 700; margin-bottom: 10px; display: block; color: var(--dal-dark-blue); line-height: 1.3; }
+        .step.active {
+            display: block;
+        }
 
-        .options { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--dal-dark-blue);
+            line-height: 1.3;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
 
         .option {
-            background: #f0f9ff; padding: 10px 12px; border-radius: 12px; cursor: pointer;
-            display: flex; align-items: center; transition: all 0.2s; border: 1px solid #e0f2fe;
-            color: var(--text-main); font-size: 13px; font-weight: 500;
+            background: #f0f9ff;
+            padding: 10px 12px;
+            border-radius: 12px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: all 0.2s;
+            border: 1px solid #e0f2fe;
+            color: var(--text-main);
+            font-size: 13px;
+            font-weight: 500;
         }
 
-        .option input { margin-right: 10px; accent-color: var(--dal-blue); transform: scale(1.1); }
+        .option input {
+            margin-right: 10px;
+            accent-color: var(--dal-blue);
+            transform: scale(1.1);
+        }
 
         .text-input-box {
-            width: 100%; background: #ffffff; border: 1px solid #bae6fd; border-radius: 10px;
-            padding: 10px; color: var(--text-main); font-size: 13px; margin-top: 4px; margin-bottom: 12px; resize: vertical;
+            width: 100%;
+            background: #ffffff;
+            border: 1px solid #bae6fd;
+            border-radius: 10px;
+            padding: 10px;
+            color: var(--text-main);
+            font-size: 13px;
+            margin-top: 4px;
+            margin-bottom: 12px;
+            resize: vertical;
+            min-height: 90px;
         }
 
         .btn {
-            width: 100%; background: var(--dal-blue); color: white; border: none; padding: 12px;
-            font-size: 14px; font-weight: bold; border-radius: 14px; cursor: pointer;
-            transition: background 0.2s, transform 0.1s; box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
+            width: 100%;
+            background: var(--dal-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 3px 8px rgba(2, 132, 199, 0.25);
         }
-        .btn:hover { background: #0369a1; }
+
+        .btn:hover {
+            background: #0369a1;
+        }
+
+        .btn:disabled {
+            opacity: 0.65;
+            cursor: wait;
+        }
 
         .badge {
-            background-color: #fef3c7; color: #d97706; padding: 4px 10px; border-radius: 16px;
-            font-size: 11px; font-weight: 700; display: inline-block; margin-bottom: 10px;
+            background-color: #fef3c7;
+            color: #d97706;
+            padding: 4px 10px;
+            border-radius: 16px;
+            font-size: 11px;
+            font-weight: 700;
+            display: inline-block;
+            margin-bottom: 10px;
         }
 
         .spinner {
-            border: 4px solid #bae6fd; border-top: 4px solid var(--dal-blue); border-radius: 50%;
-            width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 15px auto;
+            border: 4px solid #bae6fd;
+            border-top: 4px solid var(--dal-blue);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 15px auto;
         }
 
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
 
-        /* BOARDING PASS STILE ANIMAL CROSSING */
         .ac-boarding-pass {
-            background: #fffdf5; 
-            border: 3px dashed #0284c7; 
-            border-radius: 16px; 
+            background: #fffdf5;
+            border: 3px dashed #0284c7;
+            border-radius: 16px;
             padding: 12px;
-            margin-top: 8px; 
-            text-align: left; 
+            margin-top: 8px;
+            text-align: left;
             box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);
         }
 
@@ -112,20 +211,35 @@
             display: block;
         }
 
-        .bp-header { 
-            display: flex; 
-            justify-content: space-between; 
-            border-bottom: 2px dotted #bae6fd; 
-            padding-bottom: 6px; 
-            margin-bottom: 8px; 
-            font-weight: bold; 
-            color: #075985; 
+        .bp-header {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 2px dotted #bae6fd;
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #075985;
             font-size: 11px;
         }
 
-        .ac-row { margin-bottom: 6px; font-size: 12px; }
-        .ac-label { color: #64748b; font-size: 9px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
-        .ac-val { font-weight: bold; color: #0c4a6e; font-size: 12px; }
+        .ac-row {
+            margin-bottom: 6px;
+            font-size: 12px;
+        }
+
+        .ac-label {
+            color: #64748b;
+            font-size: 9px;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        .ac-val {
+            font-weight: bold;
+            color: #0c4a6e;
+            font-size: 12px;
+        }
 
         .footer-logo-container {
             display: flex;
@@ -152,11 +266,6 @@
             margin: 0;
             text-align: left;
         }
-
-        .debug-bypass {
-            background: #f3f4f6; color: #4b5563; border: 1px dashed #d1d5db;
-            font-size: 10px; padding: 4px 8px; border-radius: 6px; cursor: pointer; margin-top: 10px; display: inline-block;
-        }
     </style>
 </head>
 <body>
@@ -166,23 +275,19 @@
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <!-- NOTA: Azione email momentaneamente vuota per test in tranquillità -->
-    <form id="quizForm" action="#" method="POST">
-        <input type="hidden" name="_next" value="">
+    <form id="quizForm"
+          action="https://formsubmit.co/ajax/absinthe.rcrds@gmail.com"
+          method="POST">
         <input type="hidden" name="_subject" value="Check-in Isola Segreta DAL - Valentina! ✈️">
         <input type="hidden" name="_captcha" value="false">
 
-        <!-- STEP 0: START -->
         <div class="step active" id="step0" style="text-align: center;">
             <div class="badge">DODO AIRLINES SYSTEM 🦤✈️</div>
             <h1>Volo Isola Segreta 🛫</h1>
             <p class="subtitle">Passaporto Nook Inc. Riconosciuto! Completa il check-in charter per sbloccare l'Isola Invernale Esclusiva.</p>
             <button type="button" class="btn" onclick="startQuiz()">Inizia Check-in 🎈</button>
-            <br>
-            <button type="button" class="debug-bypass" onclick="mostraParigiDiretto()">🛠️ [Test Rapido] Visualizza Boarding Pass</button>
         </div>
 
-        <!-- STEP 1: OUTFIT -->
         <div class="step" id="step1">
             <span class="question-title">1. Cosa metti nella valigia dell'abitante per l'isola innevata?</span>
             <div class="options">
@@ -193,7 +298,6 @@
             <button type="button" class="btn" onclick="nextStep(1)">Avanti ➡️</button>
         </div>
 
-        <!-- STEP 2: SNACK DI VOLO -->
         <div class="step" id="step2">
             <span class="question-title">2. Quale scorta di emergenza carichi nel vano bagagli del Dodo Hydro-1?</span>
             <div class="options">
@@ -204,29 +308,20 @@
             <button type="button" class="btn" onclick="nextStep(2)">Avanti ➡️</button>
         </div>
 
-        <!-- STEP 3: LA TRAPPOLA DELLE DATE -->
         <div class="step" id="step3">
             <span class="question-title">3. La Torre di Controllo DAL propone questo slot di volo standard:</span>
-            
-            <div style="background: #f0f9ff; border: 2px dashed #0284c7; border-radius: 12px; padding: 12px; margin-bottom: 14px; text-align: center;">
-                <span style="font-size: 14px; font-weight: bold; color: #075985;">✈️ Giovedì 10 (sera) – Lunedì 14 (pomeriggio)</span>
+
+            <div style="background:#f0f9ff;border:2px dashed #0284c7;border-radius:12px;padding:12px;margin-bottom:14px;text-align:center;">
+                <span style="font-size:14px;font-weight:bold;color:#075985;">✈️ Giovedì 10 (sera) – Lunedì 14 (pomeriggio)</span>
             </div>
 
             <div class="options">
-                <label class="option">
-                    <input type="radio" name="Slot_Date_Preferito" value="SI" required> 
-                    🟢 Sì, confermo questo slot!
-                </label>
-                <label class="option">
-                    <input type="radio" name="Slot_Date_Preferito" value="NO"> 
-                    🔴 No, non va bene
-                </label>
+                <label class="option"><input type="radio" name="Slot_Date_Preferito" value="SI" required> 🟢 Sì, confermo questo slot!</label>
+                <label class="option"><input type="radio" name="Slot_Date_Preferito" value="NO"> 🔴 No, non va bene</label>
             </div>
-
             <button type="button" class="btn" onclick="nextStep(3)">Avanti ➡️</button>
         </div>
 
-        <!-- STEP 4: ATTIVITÀ ISOLA SEGRETA -->
         <div class="step" id="step4">
             <span class="question-title">4. Appena atterrata sull'isola segreta, dove vuoi dirigerti?</span>
             <div class="options">
@@ -237,35 +332,27 @@
             <button type="button" class="btn" onclick="nextStep(4)">Avanti ➡️</button>
         </div>
 
-        <!-- STEP 5: CONFERMA FINALE -->
         <div class="step" id="step5">
             <span class="question-title">5. Ultimo controllo: l'abitante è pronta al decollo con il Dodo Hydro-1?</span>
             <div class="options">
                 <label class="option"><input type="radio" name="Conferma_Volo" value="Prontissima valigia in mano" required> 🎫 Prontissima, licenza di volo attiva!</label>
                 <label class="option"><input type="radio" name="Conferma_Volo" value="In attesa di Orville"> 🦤 In attesa dell'ok definitivo di Orville</label>
             </div>
-            <button type="button" class="btn" onclick="submitQuiz()">Conferma Check-in 🚀</button>
+            <button type="button" class="btn" id="submitButton" onclick="submitQuiz()">Conferma Check-in 🚀</button>
         </div>
     </form>
 
-    <!-- SCHERMATA DI ATTESA -->
-    <div class="step" id="stepAttesa" style="text-align: center;">
+    <div class="step" id="stepAttesa" style="text-align:center;">
         <div class="badge">TORRE DI CONTROLLO DAL 📡</div>
         <h1>Elaborazione Rotta in Corso...</h1>
         <div class="spinner"></div>
-        <p class="subtitle" style="font-size: 13px; color: #0369a1;">
-            Verifica disponibilità slot con la Torre...<br>
-            <span id="debugStatus" style="font-size: 11px; color: #64748b; background: #f0f9ff; padding: 4px 8px; border-radius: 6px; display: inline-block; margin-top: 6px;">
-                Stato connessione: In ascolto...
-            </span>
-        </p>
+        <p class="subtitle">Email inviata. Verifica disponibilità slot con la Torre...</p>
     </div>
 
-    <!-- SCHERMATA REVEAL PARIGI CON BOARDING PASS ANIMAL CROSSING -->
-    <div class="step" id="stepParigi" style="text-align: center;">
-        <div class="badge" style="background-color: #dcfce7; color: #15803d; font-size: 11px;">✈️ VOLO CONFERMATO! 🎉</div>
-        <h1 style="color: #432818; font-size: 17px; margin-bottom: 2px;">Preparati Valentina, si va a Parigi!</h1>
-        
+    <div class="step" id="stepParigi" style="text-align:center;">
+        <div class="badge" style="background-color:#dcfce7;color:#15803d;font-size:11px;">✈️ VOLO CONFERMATO! 🎉</div>
+        <h1 style="color:#432818;font-size:17px;margin-bottom:2px;">Preparati Valentina, si va a Parigi!</h1>
+
         <div class="ac-boarding-pass">
             <div class="bp-header">
                 <span>DODO AIRLINES BOARDING PASS</span>
@@ -288,7 +375,7 @@
                 <div class="ac-label">Periodo Volo</div>
                 <div class="ac-val">Giovedì 10 (sera) – Lunedì 14 (pomeriggio)</div>
             </div>
-            <div class="ac-row" style="border-bottom: none; margin-bottom: 0;">
+            <div class="ac-row" style="border-bottom:none;margin-bottom:0;">
                 <div class="ac-label">Note speciali</div>
                 <div class="ac-val">Musei, Tour Eiffel e luci di Natale! 🥐</div>
             </div>
@@ -300,22 +387,23 @@
         </div>
     </div>
 
-    <!-- SCHERMATA SUGGERIMENTO DATE (ESITO NO) -->
-    <div class="step" id="stepDate" style="text-align: center;">
-        <div class="badge" style="background-color: #fee2e2; color: #b91c1c;">AVVISO TORRE DI CONTROLLO ⚠️</div>
+    <div class="step" id="stepDate" style="text-align:center;">
+        <div class="badge" style="background-color:#fee2e2;color:#b91c1c;">AVVISO TORRE DI CONTROLLO ⚠️</div>
         <h1>Slot Non Disponibile</h1>
-        <p class="subtitle">Lo slot proposto non è compatibile. Scrivi qui sotto le tue preferenze o i giorni in cui saresti libera:</p>
-        
-        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px; text-align: left; font-size: 13px;">
+        <p class="subtitle">Lo slot proposto non è compatibile. Scrivi le tue preferenze o i giorni in cui saresti libera:</p>
+
+        <div style="background:#f8fafc;border:1px solid #cbd5e1;border-radius:12px;padding:14px;text-align:left;font-size:13px;">
             <textarea id="suggerimentoDate" class="text-input-box" placeholder="Es. Preferirei dal 18 al 21 dicembre oppure nel weekend..."></textarea>
-            <button type="button" class="btn" onclick="inviaPreferenzaDate()" style="margin-top: 4px;">Invia Suggerimento alla Torre 📩</button>
+            <button type="button" class="btn" id="dateButton" onclick="inviaPreferenzaDate()">Invia Suggerimento alla Torre 📩</button>
         </div>
     </div>
 </div>
 
 <script>
     const totalSteps = 5;
+    const statoUrl = 'stato.json';
     let pollInterval = null;
+    let controlloInCorso = false;
 
     function startQuiz() {
         document.getElementById('step0').classList.remove('active');
@@ -324,78 +412,123 @@
         updateProgress(1);
     }
 
-    function mostraParigiDiretto() {
-        document.getElementById('step0').classList.remove('active');
-        document.getElementById('stepParigi').classList.add('active');
-    }
-
     function nextStep(stepNum) {
-        const currentStepEl = document.getElementById('step' + stepNum);
-        const inputs = currentStepEl.querySelectorAll('input[type="radio"]');
-        let checked = false;
-        inputs.forEach(input => { if (input.checked) checked = true; });
+        const currentStep = document.getElementById('step' + stepNum);
+        const checked = currentStep.querySelector('input[type="radio"]:checked');
 
-        if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
-
-        currentStepEl.classList.remove('active');
-        const nextStepEl = document.getElementById('step' + (stepNum + 1));
-        if (nextStepEl) {
-            nextStepEl.classList.add('active');
-            updateProgress(stepNum + 1);
+        if (!checked) {
+            alert("Scegli un'opzione prima di proseguire! 🦤");
+            return;
         }
+
+        currentStep.classList.remove('active');
+        document.getElementById('step' + (stepNum + 1)).classList.add('active');
+        updateProgress(stepNum + 1);
     }
 
     function updateProgress(step) {
-        document.getElementById('progressBar').style.width = (step / totalSteps) * 100 + '%';
+        document.getElementById('progressBar').style.width =
+            (step / totalSteps) * 100 + '%';
     }
 
-    function submitQuiz() {
-        const currentStepEl = document.getElementById('step5');
-        const inputs = currentStepEl.querySelectorAll('input[type="radio"]');
-        let checked = false;
-        inputs.forEach(input => { if (input.checked) checked = true; });
+    async function inviaEmail(formData) {
+        const form = document.getElementById('quizForm');
+        const response = await fetch(form.action, {
+            method: 'POST',
+            body: formData,
+            headers: { Accept: 'application/json' }
+        });
 
-        if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
+        if (!response.ok) {
+            throw new Error('Invio email non riuscito. Controlla la connessione e l’indirizzo configurato.');
+        }
 
-        document.getElementById('step5').classList.remove('active');
-        document.getElementById('progressContainer').style.display = 'none';
-        document.getElementById('stepAttesa').classList.add('active');
-
-        pollInterval = setInterval(checkStatoRemote, 2500);
+        const result = await response.json();
+        if (result.success !== true && result.success !== 'true') {
+            throw new Error(result.message || 'Il servizio email non ha confermato l’invio.');
+        }
     }
 
-    function checkStatoRemote() {
-        const debugEl = document.getElementById('debugStatus');
-        const cacheBuster = 't=' + Date.now();
+    async function submitQuiz() {
+        if (controlloInCorso) return;
 
-        fetch('stato.json?' + cacheBuster, { cache: 'no-store' })
-            .then(res => {
-                if (!res.ok) throw new Error("File non trovato");
-                return res.json();
-            })
-            .then(data => {
-                const stato = data.stato ? data.stato.trim().toUpperCase() : "";
-                if (debugEl) debugEl.innerText = "Stato letto: " + stato;
+        const finalStep = document.getElementById('step5');
+        if (!finalStep.querySelector('input[type="radio"]:checked')) {
+            alert("Scegli un'opzione prima di proseguire! 🦤");
+            return;
+        }
 
-                if (stato === "PARIGI") {
-                    clearInterval(pollInterval);
-                    document.getElementById('stepAttesa').classList.remove('active');
-                    document.getElementById('stepParigi').classList.add('active');
-                } else if (stato === "DATE") {
-                    clearInterval(pollInterval);
-                    document.getElementById('stepAttesa').classList.remove('active');
-                    document.getElementById('stepDate').classList.add('active');
-                }
-            })
-            .catch(err => {
-                if (debugEl) debugEl.innerText = "In ascolto su stato.json...";
+        controlloInCorso = true;
+        const submitButton = document.getElementById('submitButton');
+        submitButton.disabled = true;
+
+        try {
+            await inviaEmail(new FormData(document.getElementById('quizForm')));
+
+            finalStep.classList.remove('active');
+            document.getElementById('progressContainer').style.display = 'none';
+            document.getElementById('stepAttesa').classList.add('active');
+
+            await checkStatoRemote();
+            pollInterval = setInterval(checkStatoRemote, 2500);
+        } catch (error) {
+            controlloInCorso = false;
+            submitButton.disabled = false;
+            alert(error.message);
+        }
+    }
+
+    async function checkStatoRemote() {
+        try {
+            const response = await fetch(statoUrl + '?t=' + Date.now(), {
+                cache: 'no-store'
             });
+
+            if (!response.ok) return;
+
+            const data = await response.json();
+            const stato = typeof data.stato === 'string'
+                ? data.stato.trim().toUpperCase()
+                : '';
+
+            if (stato !== 'PARIGI' && stato !== 'DATE') return;
+
+            clearInterval(pollInterval);
+            pollInterval = null;
+
+            document.getElementById('stepAttesa').classList.remove('active');
+            document.getElementById(stato === 'PARIGI' ? 'stepParigi' : 'stepDate')
+                .classList.add('active');
+        } catch {
+            // Se il file non è ancora raggiungibile, riprova al controllo successivo.
+        }
     }
 
-    function inviaPreferenzaDate() {
-        const testo = document.getElementById('suggerimentoDate').value;
-        if (!testo) { alert("Scrivi un breve suggerimento prima di inviare!"); return; }
-        alert("Suggerimento inviato con successo alla Torre di Controllo! Ti ricontrolleremo a breve.");
+    async function inviaPreferenzaDate() {
+        const textarea = document.getElementById('suggerimentoDate');
+        const testo = textarea.value.trim();
+
+        if (!testo) {
+            alert('Scrivi un breve suggerimento prima di inviare!');
+            return;
+        }
+
+        const button = document.getElementById('dateButton');
+        button.disabled = true;
+
+        try {
+            const formData = new FormData(document.getElementById('quizForm'));
+            formData.set('_subject', 'Preferenze date - Check-in Dodo Airlines');
+            formData.set('Preferenze_Date', testo);
+
+            await inviaEmail(formData);
+            alert('Preferenze inviate alla Torre di Controllo!');
+            textarea.value = '';
+        } catch (error) {
+            alert(error.message);
+        } finally {
+            button.disabled = false;
+        }
     }
 </script>
 
