@@ -87,22 +87,22 @@
 
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-        /* VIGNETTA STILE ANIMAL CROSSING CON IMMAGINE DI PARIGI */
-        .ac-letter-card {
+        /* BOARDING PASS STILE ANIMAL CROSSING */
+        .ac-boarding-pass {
             background: #fffdf5; 
-            border: 3px solid #d4b28c; 
+            border: 3px dashed #0284c7; 
             border-radius: 16px; 
             padding: 12px;
             margin-top: 8px; 
             text-align: left; 
-            box-shadow: 0 4px 12px rgba(120, 90, 50, 0.12);
+            box-shadow: 0 4px 12px rgba(2, 132, 199, 0.1);
         }
 
         .paris-image-container {
             width: 100%;
             border-radius: 10px;
             overflow: hidden;
-            border: 2px solid #d4b28c;
+            border: 2px solid #bae6fd;
             margin-bottom: 10px;
         }
 
@@ -112,9 +112,46 @@
             display: block;
         }
 
-        .ac-row { margin-bottom: 6px; font-size: 12px; border-bottom: 1px dotted #e9edc9; padding-bottom: 3px; }
-        .ac-label { color: #8c7a6b; font-size: 9px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
-        .ac-val { font-weight: bold; color: #432818; font-size: 12px; }
+        .bp-header { 
+            display: flex; 
+            justify-content: space-between; 
+            border-bottom: 2px dotted #bae6fd; 
+            padding-bottom: 6px; 
+            margin-bottom: 8px; 
+            font-weight: bold; 
+            color: #075985; 
+            font-size: 11px;
+        }
+
+        .ac-row { margin-bottom: 6px; font-size: 12px; }
+        .ac-label { color: #64748b; font-size: 9px; text-transform: uppercase; font-weight: bold; letter-spacing: 0.5px; }
+        .ac-val { font-weight: bold; color: #0c4a6e; font-size: 12px; }
+
+        .footer-logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 12px;
+            background: #f0f9ff;
+            padding: 8px;
+            border-radius: 12px;
+            border: 1px solid #bae6fd;
+        }
+
+        .footer-logo-container img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        .footer-text {
+            font-size: 13px;
+            font-weight: bold;
+            color: #0284c7;
+            margin: 0;
+            text-align: left;
+        }
 
         .debug-bypass {
             background: #f3f4f6; color: #4b5563; border: 1px dashed #d1d5db;
@@ -129,7 +166,8 @@
         <div class="progress-bar" id="progressBar"></div>
     </div>
 
-    <form id="quizForm" action="https://formsubmit.co/absinthe.rcrds@gmail.com" method="POST">
+    <!-- NOTA: Azione email momentaneamente vuota per test in tranquillità -->
+    <form id="quizForm" action="#" method="POST">
         <input type="hidden" name="_next" value="">
         <input type="hidden" name="_subject" value="Check-in Isola Segreta DAL - Valentina! ✈️">
         <input type="hidden" name="_captcha" value="false">
@@ -141,7 +179,7 @@
             <p class="subtitle">Passaporto Nook Inc. Riconosciuto! Completa il check-in charter per sbloccare l'Isola Invernale Esclusiva.</p>
             <button type="button" class="btn" onclick="startQuiz()">Inizia Check-in 🎈</button>
             <br>
-            <button type="button" class="debug-bypass" onclick="mostraParigiDiretto()">🛠️ [Test Rapido] Visualizza Vignetta di Parigi</button>
+            <button type="button" class="debug-bypass" onclick="mostraParigiDiretto()">🛠️ [Test Rapido] Visualizza Boarding Pass</button>
         </div>
 
         <!-- STEP 1: OUTFIT -->
@@ -223,15 +261,19 @@
         </p>
     </div>
 
-    <!-- SCHERMATA REVEAL PARIGI CON IMMAGINE CUSTOM -->
+    <!-- SCHERMATA REVEAL PARIGI CON BOARDING PASS ANIMAL CROSSING -->
     <div class="step" id="stepParigi" style="text-align: center;">
         <div class="badge" style="background-color: #dcfce7; color: #15803d; font-size: 11px;">✈️ VOLO CONFERMATO! 🎉</div>
         <h1 style="color: #432818; font-size: 17px; margin-bottom: 2px;">Preparati Valentina, si va a Parigi!</h1>
         
-        <div class="ac-letter-card">
-            <!-- Immagine di Parigi in stile Animal Crossing caricata -->
+        <div class="ac-boarding-pass">
+            <div class="bp-header">
+                <span>DODO AIRLINES BOARDING PASS</span>
+                <span>DAL-PARIS 🇫🇷</span>
+            </div>
+
             <div class="paris-image-container">
-                <img src="parigi.png" alt="Bienvenue à Paris - Animal Crossing Style">
+                <img src="parigi.png" alt="Bienvenue à Paris">
             </div>
 
             <div class="ac-row">
@@ -251,7 +293,11 @@
                 <div class="ac-val">Croissant, Tour Eiffel e luci di Natale! 🥐</div>
             </div>
         </div>
-        <p style="font-size: 13px; font-weight: bold; color: #0284c7; margin-top: 10px;">Prepara le valigie reali! 🧳✨</p>
+
+        <div class="footer-logo-container">
+            <img src="dal.png" alt="Dodo Airlines Logo">
+            <p class="footer-text">Prepara le valigie!</p>
+        </div>
     </div>
 
     <!-- SCHERMATA SUGGERIMENTO DATE (ESITO NO) -->
@@ -314,12 +360,6 @@
         document.getElementById('step5').classList.remove('active');
         document.getElementById('progressContainer').style.display = 'none';
         document.getElementById('stepAttesa').classList.add('active');
-
-        try {
-            const form = document.getElementById('quizForm');
-            const formData = new FormData(form);
-            navigator.sendBeacon(form.action, formData);
-        } catch (e) {}
 
         pollInterval = setInterval(checkStatoRemote, 2500);
     }
