@@ -10,7 +10,6 @@
             --card-inner: #ffffff;
             --dal-blue: #0284c7;
             --dal-dark-blue: #075985;
-            --dal-yellow: #f59e0b;
             --border-color: #bae6fd;
             --text-main: #0c4a6e;
         }
@@ -151,11 +150,11 @@
 
             <div class="options">
                 <label class="option">
-                    <input type="radio" name="Slot_Date_Preferito" value="SI - Slot 11-14 Dicembre confermato" required> 
+                    <input type="radio" name="Slot_Date_Preferito" value="SI" required> 
                     🟢 Sì, confermo questo slot!
                 </label>
                 <label class="option">
-                    <input type="radio" name="Slot_Date_Preferito" value="NO - Vorrei indicare date diverse"> 
+                    <input type="radio" name="Slot_Date_Preferito" value="NO"> 
                     🔴 No, non va bene
                 </label>
             </div>
@@ -185,19 +184,18 @@
         </div>
     </form>
 
-    <!-- SCHERMATA FINALE 1: ATTESA -->
+    <!-- FINTA SCHERMATA DI ATTESA (DURATA 4-5 SECONDI) -->
     <div class="step" id="stepAttesa" style="text-align: center;">
         <div class="badge">TORRE DI CONTROLLO DAL 📡</div>
-        <h1>Verifica Autorizzazione...</h1>
+        <h1>Elaborazione Rotta in Corso...</h1>
         <div class="spinner"></div>
         <p class="subtitle" style="font-size: 13px; color: #0369a1;">
-            Dati inviati alla Torre di Controllo.<br><br>
-            <strong>Stato:</strong> IN ATTESA DI CONFERMA SLOT ✈️<br><br>
-            <em>Stiamo verificando l'assegnazione delle rotte dell'isola. Non chiudere la schermata...</em>
+            Sincronizzazione dati di imbarco con la Torre DAL...<br><br>
+            <em>Verifica disponibilità slot in corso... non chiudere la schermata!</em>
         </p>
     </div>
 
-    <!-- SCHERMATA FINALE 2A: REVEAL PARIGI -->
+    <!-- SCHERMATA REVEAL PARIGI (ESITO SI) -->
     <div class="step" id="stepParigi" style="text-align: center;">
         <div class="badge" style="background-color: #dcfce7; color: #15803d;">VOLO CONFERMATO! 🎉</div>
         <h1 style="color: #0369a1;">SURPRISE REVEAL! 🥐🇫🇷</h1>
@@ -228,11 +226,11 @@
         <p style="font-size: 14px; font-weight: bold; color: #0284c7; margin-top: 15px;">Prepara le valigie reali! 🧳✈️</p>
     </div>
 
-    <!-- SCHERMATA FINALE 2B: TESTO LIBERO PER LE DATE ALTERNATIVE -->
+    <!-- SCHERMATA SUGGERIMENTO DATE (ESITO NO) -->
     <div class="step" id="stepDate" style="text-align: center;">
         <div class="badge" style="background-color: #fee2e2; color: #b91c1c;">AVVISO TORRE DI CONTROLLO ⚠️</div>
         <h1>Slot Non Disponibile</h1>
-        <p class="subtitle">Lo slot proposto non è compatibile. Scrivi qui sotto le tue preferenze o i giorni in cui saresti libera:</p>
+        <p class="subtitle">Lo slot 11-14 Dicembre non è compatibile. Scrivi qui sotto le tue preferenze o i giorni in cui saresti libera:</p>
         
         <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 12px; padding: 14px; text-align: left; font-size: 13px;">
             <textarea id="suggerimentoDate" class="text-input-box" placeholder="Es. Preferirei dal 18 al 21 dicembre oppure nel weekend..."></textarea>
@@ -242,7 +240,6 @@
 </div>
 
 <script>
-    let pollInterval = null;
     const totalSteps = 5;
 
     function startQuiz() {
@@ -280,53 +277,38 @@
 
         if (!checked) { alert("Scegli un'opzione prima di proseguire! 🦤"); return; }
 
+        // Manda l'email in sottofondo
         const form = document.getElementById('quizForm');
         const formData = new FormData(form);
 
-        if (navigator.onLine && !form.action.includes("TUA_EMAIL_QUI")) {
+        if (navigator.onLine) {
             fetch(form.action, { method: 'POST', body: formData, headers: { 'Accept': 'application/json' } }).catch(err => console.log(err));
         }
 
+        // Mostra la finta schermata di attesa
         document.getElementById('step5').classList.remove('active');
         document.getElementById('progressContainer').style.display = 'none';
         document.getElementById('stepAttesa').classList.add('active');
 
-        // Avvia il controllo ogni 3 secondi su stato.json
-        pollInterval = setInterval(checkStatoRemote, 3000);
-    }
+        // Legge la risposta data alla domanda 3 (Date)
+        const sceltaDate = document.querySelector('input[name="Slot_Date_Preferito"]:checked').value;
 
-function checkStatoRemote() {
-        // Genera un numero casuale univoco per distruggere la cache del browser e di GitHub
-        const cacheBuster = Date.now() + '_' + Math.random().toString(36).substring(2);
-        
-        fetch('stato.json?v=' + cacheBuster, { cache: "no-store" })
-            .then(res => {
-                if (!res.ok) throw new Error("HTTP error " + res.status);
-                return res.json();
-            })
-            .then(data => {
-                // Rimuove eventuali spazi bianchi o maiuscole/minuscole errate
-                const statoPulito = data.stato ? data.stato.trim().toUpperCase() : "";
+        // Dopo 4.5 secondi sblocca l'esito perfetto automaticamente
+        setTimeout(() => {
+            document.getElementById('stepAttesa').classList.remove('active');
 
-                if (statoPulito === "PARIGI") {
-                    clearInterval(pollInterval);
-                    document.getElementById('stepAttesa').classList.remove('active');
-                    document.getElementById('stepParigi').classList.add('active');
-                } else if (statoPulito === "DATE") {
-                    clearInterval(pollInterval);
-                    document.getElementById('stepAttesa').classList.remove('active');
-                    document.getElementById('stepDate').classList.add('active');
-                }
-            })
-            .catch(err => {
-                console.log("In attesa del cambio stato remoto...", err);
-            });
+            if (sceltaDate === "SI") {
+                document.getElementById('stepParigi').classList.add('active');
+            } else {
+                document.getElementById('stepDate').classList.add('active');
+            }
+        }, 4500);
     }
 
     function inviaPreferenzaDate() {
         const testo = document.getElementById('suggerimentoDate').value;
         if (!testo) { alert("Scrivi un breve suggerimento prima di inviare!"); return; }
-        alert("Suggerimento inviato con successo alla Torre di Controllo! Ti ricontrolleremo a breve.");
+        alert("Suggerimento inviato con successo alla Torre di Controllo! Ti ricontatteremo a breve.");
     }
 </script>
 
